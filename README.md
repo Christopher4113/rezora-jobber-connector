@@ -28,7 +28,9 @@ End to end runs in about 2–3 s per call: roughly 1.3 s for extraction on Groq 
 
 One bug turned up in the live run: on the first pass the model resolved "Wednesday" to Tuesday. The prompt now includes an explicit 7-day calendar (`Wednesday = 2026-11-25`, …). The table above shows the run after that fix.
 
-<!-- TODO: add docs/jobber-schedule.png, a screenshot of Jobber's Schedule view showing the booked jobs -->
+![Jobber schedule, week of Nov 22: the seeded 10:00 visit plus the jobs booked from calls](docs/jobber-schedule.png)
+
+Jobber's Schedule view after the live run. Tue 10:00 is the visit `seed.py` added, which the leak call bumped into. Wed 11:00 (María González, the Spanish call) and Wed 2:00 PM (Tom Brennan) were booked by the connector. The Tue 2:00 PM AC tune-up came from the first run, before the weekday fix.
 
 ## Demo UI
 
@@ -84,10 +86,6 @@ cli.py, seed.py, transcripts/, tests/, web/index.html
   - Idempotency keys on retries, so a re-sent webhook doesn't create a duplicate job.
   - Jobber App Marketplace review.
 - **Other field-service tools:** the same `book()` interface would serve ServiceTitan and Housecall Pro behind adapters with the same five methods (`find_client_by_phone`, `create_client`, `visits_between`, `create_job_with_visit`, `create_request`).
-
-## Talk to Rezora
-
-<!-- TODO: make a call with "Talk to Rezora" on https://rezora.io, write it up as transcripts/rezora_demo_call.txt, and summarise it here. The demo UI picks it up automatically as "Real Rezora call". -->
 
 ## License
 

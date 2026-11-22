@@ -229,7 +229,7 @@ const $ = (id) => document.getElementById(id);
 const LABEL = { job_booked: "Job booked", conflict: "Slot taken", urgent_escalated: "Urgent · owner notified",
   request_created: "Request created", needs_human: "Needs a human" };
 const NAMES = { ac_tune_up: "AC tune-up", leak_inspection_conflict: "Leak, slot taken", no_heat: "No heat (emergency)",
-  quote_no_time: "Quote, no time", plomeria_es: "Plomería (ES)", rezora_demo_call: "Real Rezora call" };
+  quote_no_time: "Quote, no time", plomeria_es: "Plomería (ES)" };
 let samples = {}, highlight = null;
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
