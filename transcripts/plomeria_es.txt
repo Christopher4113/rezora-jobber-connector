@@ -1,0 +1,13 @@
+Agente: Newton Home Services, le habla el asistente de Rezora. ¿En qué le puedo ayudar?
+Cliente: Hola, buenas. El fregadero de la cocina está tapado y el agua no baja.
+Agente: Lo siento. ¿Hay agua saliendo o goteando por algún lado?
+Cliente: No, no gotea, solo no drena.
+Agente: Entendido. ¿Me da su nombre, por favor?
+Cliente: María González.
+Agente: ¿Y un número de teléfono?
+Cliente: 617-555-0131.
+Agente: ¿Cuál es la dirección?
+Cliente: 145 Washington Street, Brighton, MA 02135.
+Agente: Tengo disponible el miércoles a las 11 de la mañana. ¿Le sirve?
+Cliente: Sí, el miércoles a las 11 está bien.
+Agente: Perfecto, queda agendado para destapar el fregadero el miércoles a las 11.

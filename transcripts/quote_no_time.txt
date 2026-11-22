@@ -1,0 +1,12 @@
+Agent: Thanks for calling Newton Home Services. How can I help today?
+Caller: Hi, I'm thinking about replacing my old oil boiler with a heat pump and I'd like a quote.
+Agent: We can definitely help with that. What's your name?
+Caller: Karen Liu.
+Agent: And the best number to reach you?
+Caller: 857-555-0164.
+Agent: What's the property address?
+Caller: 230 Lowell Avenue, Newton, MA 02460.
+Agent: Would you like to schedule an estimate visit now?
+Caller: Not yet, I need to check my schedule. Can someone just call me with some options?
+Agent: Of course. I'll pass this to the team and someone will reach out to set up a time for the estimate.
+Caller: Great, thank you.

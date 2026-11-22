@@ -1,0 +1,19 @@
+[project]
+name = "rezora-jobber-connector"
+version = "0.1.0"
+description = "Prototype: Rezora call transcripts land as booked jobs in Jobber"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["httpx", "pydantic", "openai", "fastapi", "uvicorn"]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+markers = ["live: hits the real Jobber test account and Groq (opt-in: pytest -m live)"]
+addopts = "-m 'not live'"
+
+[tool.setuptools]
+packages = ["rezora_jobber"]

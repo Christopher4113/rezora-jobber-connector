@@ -1,0 +1,11 @@
+Agent: Newton Home Services, Rezora assistant speaking. What can I do for you?
+Caller: Hey, it's Dana Whitfield. There's a water stain on my kitchen ceiling, it's dry now, no dripping. Can someone take a look?
+Agent: Sorry to hear that, Dana. A leak inspection makes sense. Is this still at 18 Elm Street in Newton?
+Caller: Yes, same place.
+Agent: And the best number is still (617) 555-0142?
+Caller: That's right.
+Agent: When would you like us to come out?
+Caller: Tomorrow at 10 in the morning would be ideal.
+Agent: Let me request tomorrow at 10 AM for a leak inspection. I'll confirm by text if that slot is taken.
+Caller: Thanks, I have a dog, she's friendly.
+Agent: Got it. Talk soon.

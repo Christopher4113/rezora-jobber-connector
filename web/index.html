@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rezora × Jobber</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FDFCF9; --card: #FFFFFF; --ink: #111114; --ink-2: #55525C; --ink-3: #8A8792;
+    --line: #E9E7EC; --soft: #F5F3EF; --purple: #9234EA; --purple-soft: #F4ECFD;
+    --green: #157F4A; --green-soft: #E6F4EC; --amber: #9A5B00; --amber-soft: #FDF1DE;
+    --red: #B42318; --red-soft: #FDECEA; --gray-soft: #EFEEF1;
+    --shadow: 0 1px 2px rgba(30,15,60,.06), 0 8px 24px -12px rgba(30,15,60,.12);
+    --serif: "Fraunces", Georgia, serif; --sans: "Geist", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  nav .right { display: flex; gap: 8px; align-items: center; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px;
+    border-radius: 15px; border: 1px solid var(--ink); background: var(--ink); color: #fff; font: 500 15px var(--sans);
+    cursor: pointer; text-decoration: none; transition: transform .15s ease, opacity .15s ease; }
+  .btn:hover { opacity: .88; } .btn:active { transform: scale(.98); }
+  .btn[disabled] { opacity: .5; cursor: progress; }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+
+  .hero { text-align: center; padding: 48px 0 40px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--card); font-size: 14px; color: var(--ink-2); box-shadow: var(--shadow); }
+  .pill b { color: var(--ink); font-weight: 500; }
+  .yc { width: 18px; height: 18px; border-radius: 4px; background: #F26522; color: #fff; display: grid; place-items: center; font: 600 11px var(--sans); }
+  h1 { font: 400 clamp(36px, 6vw, 58px)/1.05 var(--serif); letter-spacing: -.02em; margin: 20px auto 16px; max-width: 820px; }
+  h1 em { font-style: italic; color: var(--purple); }
+  .lede { color: var(--ink-2); font-size: 18px; max-width: 620px; margin: 0 auto; }
+  h2 { font: 400 22px/1.2 var(--serif); margin: 0; letter-spacing: -.01em; }
+  .eyebrow { font-size: 13px; color: var(--ink-3); margin: 0 0 4px; }
+
+  .grid { display: grid; grid-template-columns: 1.05fr 1fr 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 1020px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); }
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+  .step { width: 28px; height: 28px; border-radius: 9px; background: var(--soft); display: grid; place-items: center; font: 500 13px var(--mono); flex: none; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .chip { min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+    font: 500 13px var(--sans); color: var(--ink-2); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  label { display: block; font-size: 13px; color: var(--ink-2); margin: 0 0 6px; }
+  textarea, input, select { width: 100%; font: 14px/1.5 var(--sans); color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(30,15,60,.06); }
+  textarea { min-height: 300px; resize: vertical; font-family: var(--mono); font-size: 12.5px; line-height: 1.6; }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 12px 0 16px; }
+  .run { width: 100%; }
+
+  /* Call transcript + player: ported from 21st.dev "Transcript" (aadixc0de), stacked layout */
+  .tx-wrap { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-bottom: 8px; }
+  .tx-top { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--ink-2); }
+  .tx-top .live { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+  .tx-top.playing .live { background: var(--red); animation: pulse 1.2s ease-in-out infinite; }
+  .tx-top .lang { margin-left: auto; font: 12px var(--mono); color: var(--ink-3); }
+  .tx { height: 300px; overflow: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; overscroll-behavior: contain; }
+  .tx-group { display: flex; flex-direction: column; gap: 4px; }
+  .tx-group header { display: flex; align-items: baseline; gap: 8px; height: 20px; }
+  .tx-who { font: 500 13px var(--sans); color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+  .tx-group[data-role="agent"] .tx-who::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--purple); }
+  .tx-seek { font: 12px/16px var(--sans); font-variant-numeric: tabular-nums; color: var(--ink-3); background: none; border: 0;
+    padding: 0 4px; margin: 0 -4px; border-radius: 4px; cursor: pointer; transition: background .15s, color .15s; }
+  .tx-seek:hover { background: var(--soft); color: var(--ink); }
+  .tx-line { margin: 0 -8px; padding: 1px 8px; border-radius: 6px; font-size: 14.5px; line-height: 1.5; letter-spacing: -.006em;
+    color: var(--ink); overflow-wrap: anywhere; transition: background .15s; }
+  .tx-group[data-role="agent"] .tx-line { color: var(--ink-2); }
+  .tx-line[aria-current="true"] { background: var(--purple-soft); color: var(--ink); }
+  .caret { display: inline-block; width: .55em; height: .55em; margin-left: 2px; border-radius: .12em; background: var(--purple); vertical-align: baseline; }
+  .tx-empty { margin: auto; text-align: center; color: var(--ink-3); font-size: 13px; display: grid; justify-items: center; gap: 8px; }
+  .player { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-top: 1px solid var(--line); background: var(--bg); }
+  .pbtn { width: 36px; height: 36px; border-radius: 10px; border: 0; background: var(--ink); color: #fff; display: grid; place-items: center; cursor: pointer; flex: none; }
+  .pbtn:active { transform: scale(.94); }
+  .scrub { flex: 1; min-width: 0; accent-color: var(--purple); height: 36px; padding: 0; border: 0; box-shadow: none; background: none; }
+  .ptime { font: 12px var(--mono); color: var(--ink-3); white-space: nowrap; }
+  .speed { min-width: 44px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); font: 500 12px var(--mono); cursor: pointer; }
+  .toggle { background: none; border: 0; color: var(--ink-2); font: 500 13px var(--sans); text-decoration: underline; cursor: pointer; padding: 4px 0; min-height: 32px; }
+
+  .pipeline { display: grid; gap: 8px; margin-bottom: 16px; }
+  .pstep { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: var(--soft); font-size: 14px; }
+  .pstep .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; }
+  .pstep .t { margin-left: auto; font: 12px var(--mono); color: var(--ink-3); }
+  .pstep.active .dot { background: var(--purple); animation: pulse 1s ease-in-out infinite; }
+  .pstep.done .dot { background: var(--green); }
+  @keyframes pulse { 50% { opacity: .3; } }
+  @media (prefers-reduced-motion: reduce) { .pstep.active .dot { animation: none; } * { transition: none !important; } }
+
+  dl.fields { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; margin: 0; font-size: 14px; }
+  dl.fields dt { color: var(--ink-3); font-size: 13px; padding-top: 1px; }
+  dl.fields dd { margin: 0; overflow-wrap: anywhere; }
+  .null { color: var(--ink-3); font-style: italic; }
+  .tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font: 500 12.5px var(--sans); }
+  .t-job_booked { background: var(--green-soft); color: var(--green); }
+  .t-conflict { background: var(--amber-soft); color: var(--amber); }
+  .t-urgent_escalated { background: var(--red-soft); color: var(--red); }
+  .t-request_created { background: var(--purple-soft); color: var(--purple); }
+  .t-needs_human { background: var(--gray-soft); color: var(--ink-2); }
+
+  .result { border-radius: 16px; padding: 16px; border: 1px solid var(--line); margin-bottom: 16px; }
+  .result .msg { font: 400 19px/1.35 var(--serif); margin: 10px 0 12px; }
+  .ids { font: 11.5px/1.7 var(--mono); color: var(--ink-3); overflow-wrap: anywhere; }
+  .empty { color: var(--ink-3); font-size: 14px; text-align: center; padding: 28px 12px; border: 1px dashed var(--line); border-radius: 16px; }
+  .err { color: var(--red); background: var(--red-soft); padding: 12px; border-radius: 12px; font-size: 14px; }
+
+  .sched { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .day { font-size: 12.5px; color: var(--ink-3); margin: 10px 0 2px; }
+  .visit { display: grid; grid-template-columns: 74px 1fr; gap: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); font-size: 14px; }
+  .visit .time { font: 500 12.5px var(--mono); color: var(--ink-2); padding-top: 2px; }
+  .visit .who { color: var(--ink-3); font-size: 13px; }
+  .visit.new { border-color: var(--green); background: var(--green-soft); }
+  .visit.taken { border-color: var(--amber); background: var(--amber-soft); }
+
+  section.fit { padding: 72px 0 32px; }
+  section.fit h2.big { font: 400 clamp(30px, 4.5vw, 44px)/1.1 var(--serif); text-align: center; margin: 0 auto 12px; letter-spacing: -.02em; }
+  .cals { max-width: 520px; margin: 32px auto 0; display: grid; gap: 8px; }
+  .cal { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  .cal .logo { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font: 600 12px var(--sans); background: var(--soft); }
+  .cal .go { margin-left: auto; font-size: 13px; color: var(--ink-2); }
+  .cal.jobber { border-color: var(--ink); box-shadow: var(--shadow); }
+  .cal.jobber .logo { background: #0D2C3D; color: #7DD87D; }
+  .cal.jobber .go { color: #fff; background: var(--ink); padding: 6px 12px; border-radius: 10px; }
+  footer { color: var(--ink-3); font-size: 13px; text-align: center; padding: 32px 0 48px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Main">
+    <a href="#top" aria-label="Rezora home">
+      <svg width="121" height="24" viewBox="0 0 131 26" fill="none" role="img" aria-label="Rezora"><path fill="#111114" d="M33.7529 19.6316H30.6166L28.0233 15.5304C28.0058 15.5304 27.9708 15.5304 27.9532 15.5304H23.5553V19.6316H20.7344V7.51839H28.3037C31.6328 7.51839 33.3499 9.09311 33.3499 11.5331C33.3499 13.4366 32.4388 14.5787 30.8268 15.1325L33.7529 19.6316ZM23.5553 9.66416V13.4193H28.1986C29.9157 13.4193 30.4763 12.5368 30.4763 11.5331C30.4763 10.4948 29.9507 9.66416 28.1986 9.66416H23.5553ZM46.2635 17.4858V19.6316H35.33V7.51839H46.0882V9.66416H38.1509V12.3464H45.5976V14.4748H38.1509V17.4858H46.2635ZM51.8594 17.4858H60.1121V19.6316H47.6718V17.8147L55.7316 9.66416H48.0046V7.51839H59.9368V9.33535L51.8594 17.4858ZM68.1328 7.27612C71.6722 7.27612 75.4393 8.9547 75.4393 13.575C75.4393 18.2126 71.6722 19.8912 68.1328 19.8912C64.5935 19.8912 60.8088 18.2126 60.8088 13.575C60.8088 8.9547 64.5935 7.27612 68.1328 7.27612ZM68.1328 17.7801C71.1816 17.7801 72.5658 15.9631 72.5658 13.575C72.5658 11.2043 71.1816 9.38726 68.1328 9.38726C65.0841 9.38726 63.6999 11.2043 63.6999 13.575C63.6999 15.9631 65.0841 17.7801 68.1328 17.7801ZM90.2018 19.6316H87.0652L84.4724 15.5304C84.4551 15.5304 84.4197 15.5304 84.4024 15.5304H80.0043V19.6316H77.1833V7.51839H84.7525C88.0819 7.51839 89.7989 9.09311 89.7989 11.5331C89.7989 13.4366 88.8877 14.5787 87.2761 15.1325L90.2018 19.6316ZM80.0043 9.66416V13.4193H84.6479C86.3649 13.4193 86.9251 12.5368 86.9251 11.5331C86.9251 10.4948 86.3995 9.66416 84.6479 9.66416H80.0043ZM102.362 19.6316L101.329 17.2609H94.5997L93.5485 19.6316H90.5528L96.2294 7.51839H99.6989L105.358 19.6316H102.362ZM95.5464 15.1325H100.382L97.9637 9.62958L95.5464 15.1325ZM106.86 16.8651H109.332V19.6316H106.86V16.8651ZM110.815 7.51839H113.616V19.6316H110.815V7.51839ZM122.423 7.27612C125.963 7.27612 129.73 8.9547 129.73 13.575C129.73 18.2126 125.963 19.8912 122.423 19.8912C118.884 19.8912 115.099 18.2126 115.099 13.575C115.099 8.9547 118.884 7.27612 122.423 7.27612ZM122.423 17.7801C125.472 17.7801 126.856 15.9631 126.856 13.575C126.856 11.2043 125.472 9.38726 122.423 9.38726C119.374 9.38726 117.99 11.2043 117.99 13.575C117.99 15.9631 119.374 17.7801 122.423 17.7801Z"/><path fill="#9234EA" d="M0 16.6504C0 14.962 1.3859 13.5933 3.09548 13.5933H9.36634C9.61219 13.5933 9.84585 13.6993 10.006 13.8835L14.7373 19.3266C14.8674 19.4762 14.7598 19.7076 14.5601 19.7076H3.09548C1.38589 19.7076 0 18.3388 0 16.6504Z"/><path fill="#9234EA" d="M15.0684 9.88516C15.0684 8.19673 13.6826 6.828 11.973 6.828H3.37633C2.95752 6.828 2.57866 7.07351 2.41193 7.45295L0.141636 12.6198C0.0746853 12.7721 0.18777 12.9423 0.355947 12.9423H11.973C13.6826 12.9423 15.0684 11.5736 15.0684 9.88516Z"/></svg>
+    </a>
+    <div class="right">
+      <a class="btn ghost" href="#fit">How it plugs in</a>
+      <a class="btn" href="#demo">Run a call</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <span class="pill"><span class="yc" aria-hidden="true">Y</span> Prototype · <b>Jobber</b> is “coming soon” on rezora.io</span>
+    <h1>Every call lands as a <em>booked job</em> in Jobber</h1>
+    <p class="lede">Rezora answers the call. This connector reads the transcript, checks your open slots, and books the visit straight into Jobber. Emergencies go to you, not next week.</p>
+  </header>
+
+  <main class="grid" id="demo">
+    <!-- 1. The call -->
+    <section class="card" aria-labelledby="h-call">
+      <div class="card-head">
+        <div><p class="eyebrow">Step 1</p><h2 id="h-call">The call</h2></div>
+        <span class="step" aria-hidden="true">01</span>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Sample calls"></div>
+      <div class="tx-wrap">
+        <div class="tx-top" id="txTop"><span class="live" aria-hidden="true"></span><span id="txStatus">Recorded call</span><span class="lang" id="txLang"></span></div>
+        <div class="tx" id="tx" role="log" aria-label="Call transcript"></div>
+        <div class="player">
+          <button class="pbtn" id="play" type="button" aria-label="Play call"></button>
+          <input class="scrub" id="scrub" type="range" min="0" value="0" step="100" aria-label="Call position">
+          <span class="ptime" id="ptime">0:00 / 0:00</span>
+          <button class="speed" id="speed" type="button" aria-label="Playback speed, 1x">1×</button>
+        </div>
+      </div>
+      <button class="toggle" id="edit" type="button" aria-expanded="false" aria-controls="transcript">Edit transcript</button>
+      <div id="editor" hidden>
+        <label for="transcript">Transcript</label>
+        <textarea id="transcript" spellcheck="false"></textarea>
+      </div>
+      <div class="row">
+        <div><label for="now">Call time (“now”)</label><input id="now" type="datetime-local" value="2026-11-23T09:00"></div>
+        <div><label for="tz">Business timezone</label>
+          <select id="tz"><option>America/New_York</option><option>America/Chicago</option><option>America/Denver</option><option>America/Los_Angeles</option></select></div>
+      </div>
+      <button class="btn run" id="run" type="button">Call ended → send to Jobber</button>
+    </section>
+
+    <!-- 2. What Rezora heard -->
+    <section class="card" aria-labelledby="h-heard" aria-live="polite">
+      <div class="card-head">
+        <div><p class="eyebrow">Step 2</p><h2 id="h-heard">What Rezora heard</h2></div>
+        <span class="step" aria-hidden="true">02</span>
+      </div>
+      <div class="pipeline">
+        <div class="pstep" id="p-extract"><span class="dot"></span>Extract call details <span class="t" id="t-extract">LLM</span></div>
+        <div class="pstep" id="p-book"><span class="dot"></span>Check slots &amp; book <span class="t" id="t-book">Jobber</span></div>
+      </div>
+      <div id="outcome"><div class="empty">Pick a sample call and send it. The structured <code>CallOutcome</code> shows up here.</div></div>
+    </section>
+
+    <!-- 3. Jobber -->
+    <section class="card" aria-labelledby="h-jobber">
+      <div class="card-head">
+        <div><p class="eyebrow">Step 3</p><h2 id="h-jobber">In Jobber</h2></div>
+        <span class="step" aria-hidden="true">03</span>
+      </div>
+      <div id="result" aria-live="polite"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <p class="eyebrow" style="margin:0">Your Jobber schedule · live</p>
+        <button class="toggle" id="refresh" type="button">Refresh</button>
+      </div>
+      <ul class="sched" id="sched"><li class="empty">Loading schedule…</li></ul>
+    </section>
+  </main>
+
+  <section class="fit" id="fit">
+    <h2 class="big">Jobber, next to the calendars<br>you already connect</h2>
+    <p class="lede" style="text-align:center">Setup step 3 gets one more row. Same <code>CallOutcome</code> in, <code>BookingResult</code> out, so ServiceTitan and Housecall Pro slot in behind the same interface.</p>
+    <div class="cals">
+      <div class="cal"><span class="logo">Cal</span>Cal.com<span class="go">Connect</span></div>
+      <div class="cal"><span class="logo">31</span>Google Calendar<span class="go">Connect</span></div>
+      <div class="cal"><span class="logo">O</span>Microsoft Outlook<span class="go">Connect</span></div>
+      <div class="cal jobber"><span class="logo">J</span><span><b style="font-weight:500">Jobber</b><br><span style="font-size:13px;color:var(--ink-3)">Clients, requests, jobs &amp; visits</span></span><span class="go">Connect</span></div>
+    </div>
+  </section>
+  <footer>Prototype by an outside builder, not affiliated with Rezora IO or Jobber. Runs against a Jobber developer test account.</footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const LABEL = { job_booked: "Job booked", conflict: "Slot taken", urgent_escalated: "Urgent · owner notified",
+  request_created: "Request created", needs_human: "Needs a human" };
+const NAMES = { ac_tune_up: "AC tune-up", leak_inspection_conflict: "Leak, slot taken", no_heat: "No heat (emergency)",
+  quote_no_time: "Quote, no time", plomeria_es: "Plomería (ES)", rezora_demo_call: "Real Rezora call" };
+let samples = {}, highlight = null;
+
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = (iso, o) => new Date(iso).toLocaleString("en-US", { timeZone: $("tz").value, ...o });
+
+// ---- Call transcript replay (ported from 21st.dev "Transcript": stacked groups, seekable m:ss, active line, caret)
+const PLAY = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>`;
+const PAUSE = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>`;
+const AUDIO_LINES = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2.75 10.5v3M6.45 7v10M10.15 3.5v17M13.85 8.5v7M17.55 5.5v13M21.25 10.5v3"/></svg>`;
+const MS_PER_WORD = 330, GAP_MS = 700, RATES = [1, 1.5, 2];
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let lines = [], total = 0, t = 0, playing = false, rate = 1, last = 0;
+
+const mmss = (ms) => `${Math.floor(ms / 60000)}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")}`;
+
+function parse(text) {
+  // Synthesize timings from word counts: a recorded call would carry real offsets from the audio.
+  let at = 0;
+  lines = text.split("\n").map((l) => l.trim()).filter(Boolean).map((l, i) => {
+    const m = l.match(/^([^:]{1,24}):\s*(.*)$/);
+    const role = m && /^(agent|agente|rezora)$/i.test(m[1].trim()) ? "agent" : "caller";
+    const words = (m ? m[2] : l).split(/\s+/);
+    const line = { i, role, words, at, dur: words.length * MS_PER_WORD };
+    at += line.dur + GAP_MS;
+    return line;
+  });
+  total = Math.max(0, at - GAP_MS);
+  $("scrub").max = total;
+  $("txLang").textContent = /agente|cliente/i.test(text) ? "ES" : "EN";
+}
+
+function renderTx() {
+  const tx = $("tx");
+  if (!lines.length) { tx.innerHTML = `<div class="tx-empty">${AUDIO_LINES}<span>What the caller and Rezora say appears here.</span></div>`; return; }
+  let html = "", prev = null;
+  for (const l of lines) {
+    if (l.at > t) break;
+    if (l.role !== prev) {
+      if (prev) html += `</div></section>`;
+      html += `<section class="tx-group" data-role="${l.role}" aria-label="${l.role === "agent" ? "Rezora" : "Caller"}">
+        <header><span class="tx-who">${l.role === "agent" ? "Rezora" : "Caller"}</span>
+        <button class="tx-seek" type="button" data-at="${l.at}" aria-label="${mmss(l.at)}, play from here">${mmss(l.at)}</button></header><div>`;
+      prev = l.role;
+    }
+    const live = t < l.at + l.dur;
+    const shown = live ? Math.max(1, Math.ceil(((t - l.at) / l.dur) * l.words.length)) : l.words.length;
+    html += `<p class="tx-line" ${live ? 'aria-current="true"' : ""}>${esc(l.words.slice(0, shown).join(" "))}${live && playing ? '<span class="caret" aria-hidden="true"></span>' : ""}</p>`;
+  }
+  tx.innerHTML = html + (prev ? `</div></section>` : "");
+  if (playing) tx.scrollTop = tx.scrollHeight;
+  $("scrub").value = t;
+  $("ptime").textContent = `${mmss(t)} / ${mmss(total)}`;
+}
+
+function setPlaying(on) {
+  playing = on;
+  $("play").innerHTML = on ? PAUSE : PLAY;
+  $("play").setAttribute("aria-label", on ? "Pause call" : "Play call");
+  $("txTop").classList.toggle("playing", on);
+  $("txStatus").textContent = on ? "Live call" : t >= total ? "Call ended" : "Paused";
+  if (on) { last = performance.now(); requestAnimationFrame(tick); }
+  renderTx();
+}
+
+function tick(now) {
+  if (!playing) return;
+  // Reduced motion: jump line to line instead of streaming word by word.
+  t = Math.min(total, t + (now - last) * rate);
+  last = now;
+  if (reduceMotion) { const nxt = lines.find((l) => l.at + l.dur > t); if (nxt) t = Math.max(t, nxt.at + nxt.dur); }
+  renderTx();
+  if (t >= total) setPlaying(false); else requestAnimationFrame(tick);
+}
+
+function loadTx(text) { setPlaying(false); parse(text); t = total; renderTx(); $("txStatus").textContent = "Recorded call"; }
+
+$("play").onclick = () => { if (!playing && t >= total) t = 0; setPlaying(!playing); };
+$("scrub").oninput = (e) => { t = +e.target.value; renderTx(); };
+$("speed").onclick = () => { rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length]; $("speed").textContent = `${rate}×`; $("speed").setAttribute("aria-label", `Playback speed, ${rate}x`); };
+$("tx").onclick = (e) => { const at = e.target.closest(".tx-seek")?.dataset.at; if (at !== undefined) { t = +at; setPlaying(true); } };
+
+function pick(name) {
+  document.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.k === name));
+  $("transcript").value = samples[name];
+  loadTx(samples[name]);
+}
+
+async function loadSamples() {
+  samples = await (await fetch("/demo/transcripts")).json();
+  $("chips").innerHTML = Object.keys(samples).map((k) =>
+    `<button class="chip" type="button" data-k="${k}" aria-pressed="false">${esc(NAMES[k] || k)}</button>`).join("");
+  $("chips").onclick = (e) => e.target.dataset.k && pick(e.target.dataset.k);
+  pick(samples.ac_tune_up ? "ac_tune_up" : Object.keys(samples)[0]);
+}
+
+async function loadSchedule() {
+  const start = $("now").value.slice(0, 10);
+  try {
+    const r = await fetch(`/demo/schedule?start=${start}&days=7&tz=${encodeURIComponent($("tz").value)}`);
+    if (!r.ok) throw new Error((await r.json()).detail);
+    const visits = await r.json();
+    if (!visits.length) { $("sched").innerHTML = `<li class="empty">No visits this week.</li>`; return; }
+    let day = "", html = "";
+    for (const v of visits) {
+      const d = fmt(v.start, { weekday: "long", month: "short", day: "numeric" });
+      if (d !== day) { html += `<li class="day">${d}</li>`; day = d; }
+      const cls = highlight && highlight.iso && Math.abs(new Date(v.start) - new Date(highlight.iso)) < 60000 ? highlight.cls : "";
+      html += `<li class="visit ${cls}"><span class="time">${fmt(v.start, { hour: "numeric", minute: "2-digit" })}</span>
+        <span>${esc(v.title)}<br><span class="who">${esc(v.client)}</span></span></li>`;
+    }
+    $("sched").innerHTML = html;
+  } catch (e) { $("sched").innerHTML = `<li class="err">Couldn't load Jobber schedule: ${esc(e.message)}</li>`; }
+}
+
+function field(k, v) {
+  const val = v === null || v === undefined || v === "" ? `<span class="null">null (not guessed)</span>` : esc(v);
+  return `<dt>${k}</dt><dd>${val}</dd>`;
+}
+
+async function run() {
+  const btn = $("run");
+  btn.disabled = true; btn.textContent = "Working…";
+  $("p-extract").className = "pstep active"; $("p-book").className = "pstep";
+  $("t-extract").textContent = "LLM"; $("t-book").textContent = "Jobber";
+  $("outcome").innerHTML = `<div class="empty">Reading the transcript…</div>`;
+  $("result").innerHTML = "";
+  try {
+    const r = await fetch("/demo/run", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ transcript: $("transcript").value, now: $("now").value, timezone: $("tz").value }) });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.detail || r.statusText);
+    const o = data.outcome, b = data.result;
+    $("p-extract").className = "pstep done"; $("p-book").className = "pstep done";
+    $("t-extract").textContent = `${data.extract_ms} ms`; $("t-book").textContent = `${data.booking_ms} ms`;
+    $("outcome").innerHTML = `<dl class="fields">
+      ${field("Caller", o.caller_name)}${field("Phone", o.phone)}${field("Address", o.address)}${field("Service", o.service)}
+      <dt>Urgent</dt><dd>${o.urgent ? `<span class="tag t-urgent_escalated">Yes</span> ${esc(o.urgency_reason)}` : "No"}</dd>
+      ${field("Agreed slot", o.requested_start && fmt(o.requested_start, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }))}
+      ${field("Language", o.language === "es" ? "Spanish → fields in English" : "English")}
+      ${field("Notes", o.notes)}</dl>`;
+    const link = b.jobber_url ? `<a class="btn ghost" href="${esc(b.jobber_url)}" target="_blank" rel="noopener">Open in Jobber ↗</a>` : "";
+    $("result").innerHTML = `<div class="result"><span class="tag t-${b.action}">${LABEL[b.action]}</span>
+      <p class="msg">${esc(b.message)}</p>${link}
+      <div class="ids" style="margin-top:10px">${["jobber_client_id", "jobber_job_id", "jobber_request_id"].filter((k) => b[k]).map((k) => `${k}: ${esc(b[k])}`).join("<br>")}</div></div>`;
+    highlight = b.action === "job_booked" ? { iso: b.scheduled_start, cls: "new" }
+      : b.action === "conflict" ? { iso: o.requested_start, cls: "taken" } : null;
+    loadSchedule();
+  } catch (e) {
+    $("p-extract").className = "pstep"; $("p-book").className = "pstep";
+    $("outcome").innerHTML = `<div class="err">${esc(e.message)}</div>`;
+  } finally { btn.disabled = false; btn.textContent = "Call ended → send to Jobber"; }
+}
+
+$("run").onclick = run;
+$("refresh").onclick = loadSchedule;
+$("now").onchange = loadSchedule; $("tz").onchange = loadSchedule;
+$("transcript").oninput = (e) => loadTx(e.target.value);
+$("edit").onclick = () => { const ed = $("editor"); ed.hidden = !ed.hidden; $("edit").setAttribute("aria-expanded", !ed.hidden); };
+// ?now=2026-11-30T09:00&rate=2 pins the call clock and replay speed (used by the recorded demo).
+const qs = new URLSearchParams(location.search);
+if (qs.get("now")) $("now").value = qs.get("now");
+if (RATES.includes(+qs.get("rate"))) { rate = +qs.get("rate"); $("speed").textContent = `${rate}×`; }
+loadSamples(); loadSchedule();
+</script>
+</body>
+</html>

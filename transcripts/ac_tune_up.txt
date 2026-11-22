@@ -1,0 +1,13 @@
+Agent: Thanks for calling Newton Home Services, this is the Rezora assistant. How can I help?
+Caller: Hi, I'd like to get my AC tuned up before next summer. It's working fine, just routine maintenance.
+Agent: Happy to set that up. Can I get your name?
+Caller: Tom Brennan.
+Agent: Thanks Tom. What's the best number to reach you?
+Caller: 617-555-0123.
+Agent: And the service address?
+Caller: 52 Cypress Street, Brookline, MA 02445.
+Agent: I have Wednesday at 2 PM open. Does that work?
+Caller: Wednesday at 2 is perfect.
+Agent: Great, you're booked for an AC tune-up Wednesday at 2 PM. The technician will need about an hour.
+Caller: The side gate is unlocked, the condenser is out back.
+Agent: Noted. See you Wednesday, Tom.

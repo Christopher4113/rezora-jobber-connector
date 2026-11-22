@@ -1,0 +1,10 @@
+Agent: Newton Home Services, this is the Rezora assistant. How can I help?
+Caller: Our furnace stopped working last night and we have no heat at all. It's 28 degrees out.
+Agent: I'm sorry, that sounds urgent. Is anyone in the home at risk from the cold?
+Caller: My mother lives with us, she's 84. The house is down to 55 degrees.
+Agent: Understood. Can I get your name and number?
+Caller: Luis Ortega, 617-555-0188.
+Agent: And the address?
+Caller: 9 Hammond Pond Parkway, Chestnut Hill, MA 02467.
+Agent: Thank you, Luis. I'm marking this as an emergency and getting it to the owner right now. Someone will call you back within minutes.
+Caller: Please hurry.
